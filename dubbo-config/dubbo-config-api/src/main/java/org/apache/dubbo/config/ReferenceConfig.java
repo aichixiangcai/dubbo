@@ -511,6 +511,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
      * @since 2.7.5
      */
     protected void dispatch(Event event) {
+        //
         EventDispatcher.getDefaultExtension().dispatch(event);
     }
 
