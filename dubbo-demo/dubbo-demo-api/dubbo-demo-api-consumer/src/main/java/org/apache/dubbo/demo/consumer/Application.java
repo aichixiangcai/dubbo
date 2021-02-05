@@ -16,23 +16,31 @@
  */
 package org.apache.dubbo.demo.consumer;
 
+import org.apache.dubbo.common.compiler.support.AdaptiveCompiler;
+import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.demo.DemoService;
+import org.apache.dubbo.rpc.Protocol;
 import org.apache.dubbo.rpc.service.GenericService;
 
 public class Application {
     public static void main(String[] args) {
-        if (isClassic(args)) {
+       /* if (isClassic(args)) {
             runWithRefer();
         } else {
             runWithBootstrap();
-        }
-    }
+        }*/
 
+        // 静态扩展点
+        // 自适应扩展点
+        // 激活扩展点
+        Protocol dubbo = ExtensionLoader.getExtensionLoader(Protocol.class).getExtension("dubbo");
+        System.out.println(dubbo);
+    }
     private static boolean isClassic(String[] args) {
         return args.length > 0 && "classic".equalsIgnoreCase(args[0]);
     }
@@ -57,6 +65,8 @@ public class Application {
         Object genericInvokeResult = genericService.$invoke("sayHello", new String[] { String.class.getName() },
                 new Object[] { "dubbo generic invoke" });
         System.out.println(genericInvokeResult);
+
+
     }
 
     private static void runWithRefer() {
